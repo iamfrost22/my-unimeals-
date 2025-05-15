@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Place your UniMeals order - delicious, healthy meals delivered to your campus location">
+    <meta name="keywords" content="university meals, campus food delivery, order food, student meal service">
+    <meta name="author" content="UniMeals">
+    <title>UniMeals | Place Your Order</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        .order-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .order-container h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .order-container h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Order Process Steps */
+        .order-process {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .order-process::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #eee;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step span {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .step.active span {
+            background: var(--gradient);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.active p {
+            color: var(--dark);
+        }
+
+        .step.completed span {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Form Styles */
+        .order-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-step h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-step h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        /* Meal Options */
+        .meal-category {
+            margin-bottom: 2rem;
+        }
+
+        .meal-category h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .meal-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .meal-option {
+            display: block;
+            position: relative;
+        }
+
+        .meal-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .meal-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .meal-option input[type="checkbox"]:checked + .meal-card {
+            border-color: var(--secondary);
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .meal-option input[type="checkbox"]:focus + .meal-card {
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+        }
+
+        .meal-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .meal-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .veg-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            background: #f0f0f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            color: #666;
+        }
+
+        .veg-tag i {
+            color: var(--secondary);
+        }
+
+        .veg-tag .fa-seedling {
+            color: #4CAF50;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-option {
+            flex: 1;
+        }
+
+        .payment-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .payment-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option input[type="radio"]:checked + .payment-card {
+            border-color: var(--primary);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .payment-option input[type="radio"]:focus + .payment-card {
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .payment-card i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .payment-card span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .payment-details {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .summary-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .order-totals {
+            margin-top: 1.5rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .grand-total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .secondary-btn:hover {
+            background: #f9f9f9;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            padding: 0.8rem 2.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        /* Order Confirmation */
+        .order-confirmation {
+            display: none;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .confirmation-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .confirmation-icon {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation-card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .confirmation-details {
+            margin: 1.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section p i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1400px;
+            margin: 2rem auto 0;
+        }
+
+        .footer-bottom p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .meal-options {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .payment-options {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background: var(--gradient);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: all 0.5s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .order-container h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-step h2 {
+                font-size: 1.6rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .order-process p {
+                display: none;
+            }
+            
+            .order-process::before {
+                top: 15px;
+            }
+            
+            .step span {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .meal-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-form {
+                padding: 1.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">UniMeals</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="order.html" class="active">Order</a></li>
+                <li><a href="survey.html">Feedback</a></li>
+                <li><a href="contacts.html">Contact Us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="order-container">
+        <h1>Place Your Order</h1>
+        
+        <div class="order-process">
+            <div class="step active" data-step="1">
+                <span>1</span>
+                <p>Your Info</p>
+            </div>
+            <div class="step" data-step="2">
+                <span>2</span>
+                <p>Order Details</p>
+            </div>
+            <div class="step" data-step="3">
+                <span>3</span>
+                <p>Payment</p>
+            </div>
+            <div class="step" data-step="4">
+                <span>4</span>
+                <p>Confirmation</p>
+            </div>
+        </div>
+
+        <form id="orderForm" class="order-form" novalidate>
+            <!-- Step 1: Customer Information -->
+            <div class="form-step active" data-step="1">
+                <h2>Customer Information</h2>
+                
+                <div class="form-group">
+                    <label for="name">Full Name*</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">University Email*</label>
+                    <input type="email" id="email" name="email" pattern=".+@.+\.edu" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number*</label>
+                    <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-id">Student ID (Optional)</label>
+                    <input type="text" id="student-id" name="student-id" placeholder="For meal plan verification">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dorm">Dorm/Building*</label>
+                    <select id="dorm" name="dorm" required>
+                        <option value="">Select your dorm/building</option>
+                        <option value="maple">Maple Hall</option>
+                        <option value="oak">Oak Hall</option>
+                        <option value="pine">Pine Hall</option>
+                        <option value="cedar">Cedar Hall</option>
+                        <option value="library">Library</option>
+                        <option value="student-center">Student Center</option>
+                        <option value="other">Other Location</option>
+                    </select>
+                    <span class="error-message" id="dorm-error"></span>
+                </div>
+                
+                <div class="form-group" id="room-group" style="display: none;">
+                    <label for="room">Room Number</label>
+                    <input type="text" id="room" name="room" placeholder="e.g., 305">
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Delivery Notes</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Any special delivery instructions? Building entrance codes, etc."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn next-btn" data-next="2">Next: Order Details</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Order Details -->
+            <div class="form-step" data-step="2">
+                <h2>Order Details</h2>
+                
+                <div class="form-group">
+                    <label for="order-type">Order Type*</label>
+                    <select id="order-type" name="order-type" required>
+                        <option value="">Select order type</option>
+                        <option value="single">Single Meal</option>
+                        <option value="weekly">Weekly Plan (10 meals)</option>
+                        <option value="monthly">Monthly Plan (50 meals)</option>
+                    </select>
+                    <span class="error-message" id="order-type-error"></span>
+                </div>
+                
+                <div class="meal-category">
+                    <h3>Breakfast</h3>
+                    <div class="meal-options">
+                        <label class="meal-option">
+                            <input type="checkbox" name="breakfast" value="power-bowl">
+                            <div class="meal-card">
+                                <h4>Breakfast Power Bowl</h4>
+                                <p>$6.50 | 450 cal</p>
+                                <span class="veg-tag"><i class="fas fa-leaf"></i> Vegetarian</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="breakfast" value="avocado-toast">
+                            <div class="meal-card">
+                                <h4>Avocado Toast</h4>
+                                <p>$5.75 | 380 cal</p>
+                                <span class="veg-tag"><i class="fas fa-leaf"></i> Vegetarian</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="breakfast" value="breakfast-burrito">
+                            <div class="meal-card">
+                                <h4>Breakfast Burrito</h4>
+                                <p>$7.25 | 520 cal</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="meal-category">
+                    <h3>Lunch</h3>
+                    <div class="meal-options">
+                        <label class="meal-option">
+                            <input type="checkbox" name="lunch" value="grain-bowl">
+                            <div class="meal-card">
+                                <h4>Harvest Grain Bowl</h4>
+                                <p>$8.50 | 480 cal</p>
+                                <span class="veg-tag"><i class="fas fa-seedling"></i> Vegan</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="lunch" value="chicken-wrap">
+                            <div class="meal-card">
+                                <h4>Buffalo Chicken Wrap</h4>
+                                <p>$8.00 | 560 cal</p>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="lunch" value="salmon-salad">
+                            <div class="meal-card">
+                                <h4>Salmon Salad</h4>
+                                <p>$9.75 | 490 cal</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="meal-category">
+                    <h3>Dinner</h3>
+                    <div class="meal-options">
+                        <label class="meal-option">
+                            <input type="checkbox" name="dinner" value="mushroom-pasta">
+                            <div class="meal-card">
+                                <h4>Creamy Mushroom Pasta</h4>
+                                <p>$8.95 | 520 cal</p>
+                                <span class="veg-tag"><i class="fas fa-leaf"></i> Vegetarian</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="dinner" value="campus-burger">
+                            <div class="meal-card">
+                                <h4>Campus Burger</h4>
+                                <p>$9.50 | 680 cal</p>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="dinner" value="thai-curry">
+                            <div class="meal-card">
+                                <h4>Thai Coconut Curry</h4>
+                                <p>$8.75 | 420 cal</p>
+                                <span class="veg-tag"><i class="fas fa-seedling"></i> Vegan</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="meal-category">
+                    <h3>Sides & Extras</h3>
+                    <div class="meal-options">
+                        <label class="meal-option">
+                            <input type="checkbox" name="sides" value="sweet-potatoes">
+                            <div class="meal-card">
+                                <h4>Roasted Sweet Potatoes</h4>
+                                <p>$3.50 | 210 cal</p>
+                                <span class="veg-tag"><i class="fas fa-seedling"></i> Vegan</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="sides" value="soup">
+                            <div class="meal-card">
+                                <h4>Soup of the Day</h4>
+                                <p>$4.25 | 180-250 cal</p>
+                                <span class="veg-tag"><i class="fas fa-leaf"></i> Vegetarian</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" name="sides" value="cookie">
+                            <div class="meal-card">
+                                <h4>Fresh Baked Cookie</h4>
+                                <p>$2.00 | 280 cal</p>
+                                <span class="veg-tag"><i class="fas fa-leaf"></i> Vegetarian</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="allergies">Allergies or Dietary Restrictions</label>
+                    <textarea id="allergies" name="allergies" rows="2" placeholder="List any food allergies or special requests (gluten-free, dairy-free, etc.)"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn secondary-btn prev-btn" data-prev="1">Back</button>
+                    <button type="button" class="btn next-btn" data-next="3">Next: Payment</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Payment Information -->
+            <div class="form-step" data-step="3">
+                <h2>Payment Information</h2>
+                
+                <div class="form-group">
+                    <label>Payment Method*</label>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment-method" value="card" required checked>
+                            <div class="payment-card">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Credit/Debit Card</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment-method" value="meal-plan">
+                            <div class="payment-card">
+                                <i class="fas fa-id-card"></i>
+                                <span>Meal Plan</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment-method" value="venmo">
+                            <div class="payment-card">
+                                <i class="fab fa-vimeo-v"></i>
+                                <span>Venmo</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div id="card-payment" class="payment-details">
+                    <div class="form-group">
+                        <label for="card-number">Card Number*</label>
+                        <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="card-expiry">Expiry Date*</label>
+                            <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvc">CVC*</label>
+                            <input type="text" id="card-cvc" name="card-cvc" placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-name">Name on Card*</label>
+                        <input type="text" id="card-name" name="card-name">
+                    </div>
+                </div>
+                
+                <div id="meal-plan-payment" class="payment-details" style="display: none;">
+                    <p>Your meal plan will be charged when we confirm your order. Please have your student ID ready for delivery verification.</p>
+                    <div class="form-group">
+                        <label for="meal-plan-id">Meal Plan ID*</label>
+                        <input type="text" id="meal-plan-id" name="meal-plan-id">
+                    </div>
+                </div>
+                
+                <div id="venmo-payment" class="payment-details" style="display: none;">
+                    <p>You'll receive a Venmo payment request after placing your order. Please pay within 15 minutes to confirm your order.</p>
+                    <div class="form-group">
+                        <label for="venmo-handle">Venmo Username*</label>
+                        <input type="text" id="venmo-handle" name="venmo-handle" placeholder="@username">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="save-payment" name="save-payment">
+                        <span>Save payment method for faster checkout next time</span>
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn secondary-btn prev-btn" data-prev="2">Back</button>
+                    <button type="button" class="btn next-btn" data-next="4">Review Order</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Order Review -->
+            <div class="form-step" data-step="4">
+                <h2>Review Your Order</h2>
+                
+                <div class="order-summary">
+                    <div class="summary-section">
+                        <h3>Delivery Information</h3>
+                        <div id="delivery-summary"></div>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <h3>Order Details</h3>
+                        <div id="order-items-summary"></div>
+                        <div class="order-totals">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span>Delivery Fee:</span>
+                                <span id="delivery-fee">$0.00</span>
+                            </div>
+                            <div class="total-row grand-total">
+                                <span>Total:</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <h3>Payment Method</h3>
+                        <div id="payment-summary"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>*</span>
+                    </label>
+                    <span class="error-message" id="terms-error"></span>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn secondary-btn prev-btn" data-prev="3">Back</button>
+                    <button type="submit" class="btn submit-btn">Place Order</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="order-confirmation">
+            <div class="confirmation-card">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Order Confirmed!</h2>
+                <p>Your order #<span id="order-number">12345</span> has been placed successfully.</p>
+                <p>Estimated delivery: <span id="delivery-time">12:30 PM</span></p>
+                <div class="confirmation-details">
+                    <p>We've sent a confirmation to <span id="confirmation-email">user@university.edu</span></p>
+                    <p>Track your order in real-time on our <a href="#">order tracking page</a>.</p>
+                </div>
+                <a href="index.html" class="btn">Back to Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="order.html">Place Order</a></li>
+                    <li><a href="survey.html">Give Feedback</a></li>
+                    <li><a href="contacts.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Campus Drive, University Town</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@unimeals.com</p>
+                <p><i class="fas fa-clock"></i> Support: 8am-10pm daily</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Stay connected for special offers and updates!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter" style="margin-top: 1.5rem;">
+                    <input type="email" placeholder="Your email" style="padding: 0.5rem; border-radius: 5px; border: none; width: 100%; margin-bottom: 0.5rem;">
+                    <button class="btn" style="width: 100%; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 UniMeals. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Careers</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+            
+            // You would need to define dark theme styles if you want this to work fully
+            // This is just the toggle functionality
+        });
+
+        // Form navigation
+        const formSteps = document.querySelectorAll('.form-step');
+        const steps = document.querySelectorAll('.step');
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const prevButtons = document.querySelectorAll('.prev-btn');
+        const form = document.getElementById('orderForm');
+        const orderConfirmation = document.querySelector('.order-confirmation');
+
+        // Show room number field if dorm is selected
+        const dormSelect = document.getElementById('dorm');
+        const roomGroup = document.getElementById('room-group');
+
+        dormSelect.addEventListener('change', () => {
+            if (dormSelect.value && dormSelect.value !== 'other') {
+                roomGroup.style.display = 'block';
+            } else {
+                roomGroup.style.display = 'none';
+            }
+        });
+
+        // Payment method toggle
+        const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+        const cardPayment = document.getElementById('card-payment');
+        const mealPlanPayment = document.getElementById('meal-plan-payment');
+        const venmoPayment = document.getElementById('venmo-payment');
+
+        paymentMethods.forEach(method => {
+            method.addEventListener('change', () => {
+                cardPayment.style.display = 'none';
+                mealPlanPayment.style.display = 'none';
+                venmoPayment.style.display = 'none';
+                
+                if (method.value === 'card') {
+                    cardPayment.style.display = 'block';
+                } else if (method.value === 'meal-plan') {
+                    mealPlanPayment.style.display = 'block';
+                } else if (method.value === 'venmo') {
+                    venmoPayment.style.display = 'block';
+                }
+            });
+        });
+
+        // Form navigation between steps
+        function goToStep(stepNumber) {
+            formSteps.forEach(step => {
+                step.classList.remove('active');
+                if (step.dataset.step === stepNumber) {
+                    step.classList.add('active');
+                }
+            });
+            
+            steps.forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.dataset.step) < parseInt(stepNumber)) {
+                    step.classList.add('completed');
+                } else {
+                    step.classList.remove('completed');
+                }
+                if (step.dataset.step === stepNumber) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currentStep = document.querySelector('.form-step.active');
+                const nextStep = button.dataset.next;
+                
+                // Validate current step before proceeding
+                if (validateStep(currentStep.dataset.step)) {
+                    goToStep(nextStep);
+                    
+                    // Update order summary in step 4
+                    if (nextStep === '4') {
+                        updateOrderSummary();
+                    }
+                }
+            });
+        });
+
+        prevButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const prevStep = button.dataset.prev;
+                goToStep(prevStep);
+            });
+        });
+
+        // Form validation
+        function validateStep(step) {
+            let isValid = true;
+            
+            if (step === '1') {
+                const name = document.getElementById('name');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                const dorm = document.getElementById('dorm');
+                
+                // Name validation
+                if (!name.value.trim()) {
+                    document.getElementById('name-error').textContent = 'Please enter your full name';
+                    document.getElementById('name-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('name-error').style.display = 'none';
+                }
+                
+                // Email validation
+                if (!email.value.trim()) {
+                    document.getElementById('email-error').textContent = 'Please enter your university email';
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                } else if (!email.value.match(/.+@.+\.edu/)) {
+                    document.getElementById('email-error').textContent = 'Please enter a valid university email (.edu)';
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').style.display = 'none';
+                }
+                
+                // Phone validation
+                if (!phone.value.trim()) {
+                    document.getElementById('phone-error').textContent = 'Please enter your phone number';
+                    document.getElementById('phone-error').style.display = 'block';
+                    isValid = false;
+                } else if (!phone.value.match(/[0-9]{3}-[0-9]{3}-[0-9]{4}/)) {
+                    document.getElementById('phone-error').textContent = 'Please enter a valid phone number (123-456-7890)';
+                    document.getElementById('phone-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('phone-error').style.display = 'none';
+                }
+                
+                // Dorm validation
+                if (!dorm.value) {
+                    document.getElementById('dorm-error').textContent = 'Please select your dorm/building';
+                    document.getElementById('dorm-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('dorm-error').style.display = 'none';
+                }
+            }
+            
+            if (step === '2') {
+                const orderType = document.getElementById('order-type');
+                const selectedMeals = document.querySelectorAll('input[type="checkbox"]:checked');
+                
+                // Order type validation
+                if (!orderType.value) {
+                    document.getElementById('order-type-error').textContent = 'Please select an order type';
+                    document.getElementById('order-type-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('order-type-error').style.display = 'none';
+                }
+                
+                // At least one meal selected validation
+                if (selectedMeals.length === 0) {
+                    document.getElementById('meals-error').textContent = 'Please select at least one meal';
+                    document.getElementById('meals-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('meals-error').style.display = 'none';
+                }
+            }
+            
+            if (step === '4') {
+                const terms = document.getElementById('terms');
+                
+                if (!terms.checked) {
+                    document.getElementById('terms-error').textContent = 'You must agree to the terms and conditions';
+                    document.getElementById('terms-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('terms-error').style.display = 'none';
+                }
+            }
+            
+            return isValid;
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            // Delivery information
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const dorm = document.getElementById('dorm');
+            const dormText = dorm.options[dorm.selectedIndex].text;
+            const room = document.getElementById('room').value;
+            const notes = document.getElementById('notes').value;
+            
+            let deliveryHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Location:</strong> ${dormText}${room ? ', Room ' + room : ''}</p>
+            `;
+            
+            if (notes) {
+                deliveryHTML += `<p><strong>Notes:</strong> ${notes}</p>`;
+            }
+            
+            document.getElementById('delivery-summary').innerHTML = deliveryHTML;
+            
+            // Order items
+            const selectedMeals = document.querySelectorAll('input[type="checkbox"]:checked');
+            let orderItemsHTML = '';
+            let subtotal = 0;
+            
+            selectedMeals.forEach(meal => {
+                const mealCard = meal.nextElementSibling;
+                const mealName = mealCard.querySelector('h4').textContent;
+                const mealPrice = parseFloat(mealCard.querySelector('p').textContent.replace('$', ''));
+                
+                orderItemsHTML += `<p>${mealName} - $${mealPrice.toFixed(2)}</p>`;
+                subtotal += mealPrice;
+            });
+            
+            document.getElementById('order-items-summary').innerHTML = orderItemsHTML;
+            
+            // Calculate totals
+            const deliveryFee = subtotal > 15 ? 0 : 2.50;
+            const total = subtotal + deliveryFee;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('delivery-fee').textContent = deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : 'FREE';
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            
+            // Payment method
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            let paymentHTML = '';
+            
+            if (paymentMethod === 'card') {
+                const cardNumber = document.getElementById('card-number').value;
+                paymentHTML = `<p><i class="fas fa-credit-card"></i> Credit/Debit Card ending in ${cardNumber.slice(-4)}</p>`;
+            } else if (paymentMethod === 'meal-plan') {
+                paymentHTML = `<p><i class="fas fa-id-card"></i> Meal Plan</p>`;
+            } else if (paymentMethod === 'venmo') {
+                const venmoHandle = document.getElementById('venmo-handle').value;
+                paymentHTML = `<p><i class="fab fa-vimeo-v"></i> Venmo (${venmoHandle})</p>`;
+            }
+            
+            document.getElementById('payment-summary').innerHTML = paymentHTML;
+        }
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (validateStep('4')) {
+                // In a real application, you would send the form data to a server here
+                // For this demo, we'll just show the confirmation
+                
+                // Generate random order number
+                const orderNumber = Math.floor(10000 + Math.random() * 90000);
+                document.getElementById('order-number').textContent = orderNumber;
+                
+                // Set estimated delivery time (current time + 30-45 minutes)
+                const now = new Date();
+                const deliveryTime = new Date(now.getTime() + (30 + Math.floor(Math.random() * 15)) * 60000);
+                const options = { hour: 'numeric', minute: '2-digit' };
+                document.getElementById('delivery-time').textContent = deliveryTime.toLocaleTimeString('en-US', options);
+                
+                // Set confirmation email
+                const email = document.getElementById('email').value;
+                document.getElementById('confirmation-email').textContent = email;
+                
+                // Hide form and show confirmation
+                form.style.display = 'none';
+                orderConfirmation.style.display = 'block';
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+        });
+
+        // Initialize form
+        goToStep('1');
+    </script>
+</body>
+</html>

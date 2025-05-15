@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore UniMeals' delicious menu - healthy, fresh meals for breakfast, lunch, and dinner delivered to your campus">
+    <meta name="keywords" content="university meals, campus food delivery, student menu, healthy campus food">
+    <meta name="author" content="UniMeals">
+    <title>UniMeals | Our Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        .menu-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .menu-container h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .menu-container h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Menu Filters */
+        .menu-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: white;
+        }
+
+        /* Menu Sections */
+        .menu-section {
+            margin-bottom: 4rem;
+        }
+
+        .menu-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Menu Items */
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover .item-image img {
+            transform: scale(1.05);
+        }
+
+        .veg-icon, .vegan-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .veg-icon {
+            color: var(--secondary);
+        }
+
+        .vegan-icon {
+            color: #4CAF50;
+            right: 50px;
+        }
+
+        .item-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .item-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .calories {
+            background: #f0f0f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .dietary {
+            background: var(--secondary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dietary Info */
+        .dietary-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 4rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .dietary-info h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .dietary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dietary-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dietary-item i {
+            font-size: 2rem;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dietary-item p {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .dietary-note {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section p i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1400px;
+            margin: 2rem auto 0;
+        }
+
+        .footer-bottom p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background: var(--gradient);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: all 0.5s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .menu-container h1 {
+                font-size: 2.5rem;
+            }
+            
+            .menu-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .dietary-info {
+                padding: 2rem 1.5rem;
+            }
+            
+            .dietary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">UniMeals</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="survey.html">Feedback</a></li>
+                <li><a href="contacts.html">Contact Us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="menu-container">
+        <h1>Our Daily Menu</h1>
+        <div class="menu-filters">
+            <button class="filter-btn active" data-category="all">All Items</button>
+            <button class="filter-btn" data-category="breakfast">Breakfast</button>
+            <button class="filter-btn" data-category="lunch">Lunch</button>
+            <button class="filter-btn" data-category="dinner">Dinner</button>
+            <button class="filter-btn" data-category="vegetarian">Vegetarian</button>
+            <button class="filter-btn" data-category="vegan">Vegan</button>
+        </div>
+        
+        <section class="menu-section">
+            <h2>Breakfast</h2>
+            <div class="menu-grid" data-category="breakfast">
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Breakfast Power Bowl">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Breakfast Power Bowl</h3>
+                        <p>Quinoa, Greek yogurt, fresh berries, granola, and honey drizzle - packed with protein to start your day right</p>
+                        <div class="item-meta">
+                            <span class="price">$6.50</span>
+                            <span class="calories">450 cal</span>
+                            <span class="dietary">Vegetarian</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Breakfast Power Bowl">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Avocado Toast">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Avocado Toast</h3>
+                        <p>Sourdough bread, smashed avocado, cherry tomatoes, feta crumbles, and chili flakes - a student favorite</p>
+                        <div class="item-meta">
+                            <span class="price">$5.75</span>
+                            <span class="calories">380 cal</span>
+                            <span class="dietary">Vegetarian</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Avocado Toast">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1552582781-5b48d9a8c3c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Breakfast Burrito">
+                    </div>
+                    <div class="item-info">
+                        <h3>Breakfast Burrito</h3>
+                        <p>Scrambled eggs, black beans, melted cheese, fresh salsa, and avocado wrapped in a whole wheat tortilla - perfect for on-the-go</p>
+                        <div class="item-meta">
+                            <span class="price">$7.25</span>
+                            <span class="calories">520 cal</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Breakfast Burrito">Add to Order</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Lunch</h2>
+            <div class="menu-grid" data-category="lunch">
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-14a2e8f8d8e6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Harvest Grain Bowl">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                        <span class="vegan-icon"><i class="fas fa-seedling"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Harvest Grain Bowl</h3>
+                        <p>Farro, roasted sweet potatoes, kale, chickpeas, and tahini dressing - a nutrient-packed vegan option</p>
+                        <div class="item-meta">
+                            <span class="price">$8.50</span>
+                            <span class="calories">480 cal</span>
+                            <span class="dietary">Vegan</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Harvest Grain Bowl">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Buffalo Chicken Wrap">
+                    </div>
+                    <div class="item-info">
+                        <h3>Buffalo Chicken Wrap</h3>
+                        <p>Grilled chicken tossed in buffalo sauce with blue cheese crumbles, crisp lettuce, and tomato in a spinach wrap</p>
+                        <div class="item-meta">
+                            <span class="price">$8.00</span>
+                            <span class="calories">560 cal</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Buffalo Chicken Wrap">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-14a2e8f8d8e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Salmon Salad">
+                    </div>
+                    <div class="item-info">
+                        <h3>Salmon Salad</h3>
+                        <p>Grilled salmon atop mixed greens with quinoa, avocado, cherry tomatoes, and lemon herb dressing</p>
+                        <div class="item-meta">
+                            <span class="price">$9.75</span>
+                            <span class="calories">490 cal</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Salmon Salad">Add to Order</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Dinner</h2>
+            <div class="menu-grid" data-category="dinner">
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Creamy Mushroom Pasta">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Creamy Mushroom Pasta</h3>
+                        <p>Whole wheat pasta with wild mushrooms, spinach, and garlic cream sauce - a comforting vegetarian option</p>
+                        <div class="item-meta">
+                            <span class="price">$8.95</span>
+                            <span class="calories">520 cal</span>
+                            <span class="dietary">Vegetarian</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Creamy Mushroom Pasta">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Campus Burger">
+                    </div>
+                    <div class="item-info">
+                        <h3>Campus Burger</h3>
+                        <p>Grass-fed beef patty with cheddar, lettuce, tomato, onion, and special sauce on a toasted brioche bun</p>
+                        <div class="item-meta">
+                            <span class="price">$9.50</span>
+                            <span class="calories">680 cal</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Campus Burger">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-14a2e8f8d8e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thai Coconut Curry">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                        <span class="vegan-icon"><i class="fas fa-seedling"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Thai Coconut Curry</h3>
+                        <p>Tofu and seasonal vegetables in rich coconut milk with Thai spices, served with jasmine rice</p>
+                        <div class="item-meta">
+                            <span class="price">$8.75</span>
+                            <span class="calories">420 cal</span>
+                            <span class="dietary">Vegan</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Thai Coconut Curry">Add to Order</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Sides & Extras</h2>
+            <div class="menu-grid" data-category="sides">
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Roasted Sweet Potatoes">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                        <span class="vegan-icon"><i class="fas fa-seedling"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Roasted Sweet Potatoes</h3>
+                        <p>Seasonal sweet potatoes roasted with rosemary and sea salt - a perfect side to any meal</p>
+                        <div class="item-meta">
+                            <span class="price">$3.50</span>
+                            <span class="calories">210 cal</span>
+                            <span class="dietary">Vegan</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Roasted Sweet Potatoes">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Soup of the Day">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Soup of the Day</h3>
+                        <p>Ask about today's homemade soup selection - always made fresh daily with seasonal ingredients</p>
+                        <div class="item-meta">
+                            <span class="price">$4.25</span>
+                            <span class="calories">180-250 cal</span>
+                            <span class="dietary">Vegetarian</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Soup of the Day">Add to Order</button>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fresh Baked Cookie">
+                        <span class="veg-icon"><i class="fas fa-leaf"></i></span>
+                    </div>
+                    <div class="item-info">
+                        <h3>Fresh Baked Cookie</h3>
+                        <p>Choose from chocolate chip, oatmeal raisin, or double chocolate - baked fresh daily by Chef Emily</p>
+                        <div class="item-meta">
+                            <span class="price">$2.00</span>
+                            <span class="calories">280 cal</span>
+                            <span class="dietary">Vegetarian</span>
+                        </div>
+                        <button class="btn add-to-cart" data-item="Fresh Baked Cookie">Add to Order</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="dietary-info">
+            <h2>Dietary Information</h2>
+            <div class="dietary-grid">
+                <div class="dietary-item">
+                    <i class="fas fa-leaf"></i>
+                    <p>Vegetarian</p>
+                </div>
+                <div class="dietary-item">
+                    <i class="fas fa-seedling"></i>
+                    <p>Vegan</p>
+                </div>
+                <div class="dietary-item">
+                    <i class="fas fa-bread-slice"></i>
+                    <p>Gluten-Free Available</p>
+                </div>
+                <div class="dietary-item">
+                    <i class="fas fa-allergies"></i>
+                    <p>Allergy Info Available</p>
+                </div>
+            </div>
+            <p class="dietary-note">Please inform us of any allergies or dietary restrictions when ordering. We take food safety seriously and can accommodate most dietary needs with advance notice.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="order.html">Place Order</a></li>
+                    <li><a href="survey.html">Give Feedback</a></li>
+                    <li><a href="contacts.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Campus Drive, University Town</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@unimeals.com</p>
+                <p><i class="fas fa-clock"></i> Support: 8am-10pm daily</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Stay connected for special offers and updates!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter" style="margin-top: 1.5rem;">
+                    <input type="email" placeholder="Your email" style="padding: 0.5rem; border-radius: 5px; border: none; width: 100%; margin-bottom: 0.5rem;">
+                    <button class="btn" style="width: 100%; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 UniMeals. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Careers</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+            
+            // You would need to define dark theme styles if you want this to work fully
+            // This is just the toggle functionality
+        });
+
+        // Menu filtering functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const category = button.dataset.category;
+                
+                menuItems.forEach(item => {
+                    const itemCategory = item.closest('.menu-grid').dataset.category;
+                    
+                    if (category === 'all' || 
+                        category === itemCategory || 
+                        (category === 'vegetarian' && item.querySelector('.veg-icon')) ||
+                        (category === 'vegan' && item.querySelector('.vegan-icon'))) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Add to cart functionality (placeholder)
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const itemName = button.dataset.item;
+                alert(`${itemName} has been added to your order!`);
+                // In a real implementation, this would add to a cart object
+            });
+        });
+
+        // Animation for menu items
+        const animateMenuItems = () => {
+            const items = document.querySelectorAll('.menu-item');
+            
+            items.forEach((item, index) => {
+                const itemPosition = item.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (itemPosition < screenPosition) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'all 0.5s ease ' + (Math.random() * 0.3) + 's';
+        });
+
+        window.addEventListener('scroll', animateMenuItems);
+        window.addEventListener('load', animateMenuItems);
+    </script>
+</body>
+</html>

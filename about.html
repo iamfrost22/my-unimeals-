@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about UniMeals - our story, mission, and team dedicated to bringing healthy meals to university students">
+    <meta name="keywords" content="university meals, campus food delivery, about unimeals, student meal service">
+    <meta name="author" content="UniMeals">
+    <title>UniMeals | About Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        /* About Section */
+        .about-section {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 5rem;
+            align-items: flex-start;
+        }
+
+        .about-text {
+            flex: 2;
+        }
+
+        .about-image {
+            flex: 1;
+            position: sticky;
+            top: 120px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1.5rem;
+            color: var(--dark);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .chefs-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 2rem 0;
+        }
+
+        .chefs-list {
+            list-style: none;
+        }
+
+        .chefs-list > li {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--secondary);
+        }
+
+        .chefs-list > li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .chefs-list strong {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .chefs-list ul {
+            list-style: none;
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .chefs-list ul li {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .chefs-list ul li::before {
+            content: '•';
+            position: absolute;
+            left: -1rem;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .about-image figure {
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-image figcaption {
+            text-align: center;
+            font-style: italic;
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        .certifications {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .certifications img {
+            height: 80px;
+            width: auto;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .certifications img:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            margin: 5rem 0;
+            position: relative;
+        }
+
+        .timeline-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--gradient);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-date {
+            padding: 0.5rem 1rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        /* Values Section */
+        .values-section {
+            margin: 5rem 0;
+            text-align: center;
+        }
+
+        .values-section h2 {
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .values-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            background: var(--gradient);
+            color: white;
+        }
+
+        .value-card:hover i,
+        .value-card:hover h3,
+        .value-card:hover p {
+            color: white;
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .value-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .value-card p {
+            color: var(--dark);
+        }
+
+        /* Video Section */
+        .video-section {
+            margin: 5rem 0;
+            text-align: center;
+        }
+
+        .video-section h2 {
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .video-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section p i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1400px;
+            margin: 2rem auto 0;
+        }
+
+        .footer-bottom p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-section {
+                flex-direction: column;
+            }
+
+            .about-image {
+                position: static;
+                order: -1;
+                margin-bottom: 3rem;
+            }
+
+            .timeline::before {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -10px;
+                border-right: 10px solid white;
+                border-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background: var(--gradient);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: all 0.5s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .certifications img {
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">UniMeals</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="survey.html">Feedback</a></li>
+                <li><a href="contacts.html">Contact Us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="about-container">
+        <section class="about-section">
+            <div class="about-text">
+                <h1>Our Story</h1>
+                <p>Founded in 2020 by a group of university students tired of the same old dining hall food, UniMeals began as a small campus initiative to provide better meal options for busy students. What started as a passion project in a dorm kitchen has grown into a thriving service supporting thousands of students across multiple campuses.</p>
+                
+                <h2>Our Mission</h2>
+                <p>We believe every student deserves access to fresh, healthy, and affordable meals without compromising on taste or convenience. Our mission is to revolutionize campus dining by delivering chef-prepared meals directly to students, saving them time and providing nourishment that fuels academic success.</p>
+                
+                <h2>Our Chefs</h2>
+                <div class="chefs-container">
+                    <ul class="chefs-list">
+                        <li><strong>Head Chef Maria</strong>
+                            <ul>
+                                <li>10 years experience in campus dining services</li>
+                                <li>Specializes in healthy comfort food that tastes like home</li>
+                                <li>Nutrition certification from Cornell University</li>
+                                <li>Creates our seasonal menu rotations</li>
+                            </ul>
+                        </li>
+                        <li><strong>Chef Jamal</strong>
+                            <ul>
+                                <li>Former restaurant owner turned campus chef</li>
+                                <li>Expert in international cuisine with 15+ global influences</li>
+                                <li>Focuses on vegetarian and vegan options</li>
+                                <li>Leads our student cooking workshops</li>
+                            </ul>
+                        </li>
+                        <li><strong>Pastry Chef Emily</strong>
+                            <ul>
+                                <li>Creates all our desserts and baked goods</li>
+                                <li>Specializes in gluten-free and allergen-friendly baking</li>
+                                <li>Makes the best cookies on campus (student-voted!)</li>
+                                <li>Developed our healthy snack line</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h2>Our Ingredients</h2>
+                <p>We partner with local farms and suppliers within 100 miles to source the freshest ingredients possible. All our meats are hormone-free, our produce is seasonal, and we accommodate all major dietary restrictions including gluten-free, vegan, halal, and kosher options. We never use artificial preservatives or flavor enhancers.</p>
+            </div>
+            <div class="about-image">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our kitchen team preparing meals">
+                    <figcaption>Our culinary team preparing today's meals with care</figcaption>
+                </figure>
+                <div class="certifications">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2451/2451981.png" alt="Organic Certified" title="Organic Certified">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063188.png" alt="Local Business Certified" title="Local Business Certified">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="Food Safety Certified" title="Food Safety Certified">
+                </div>
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <h2>Our Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2020</div>
+                    <div class="timeline-content">
+                        <h3>Founded in a Dorm Kitchen</h3>
+                        <p>Started with 3 students delivering homemade meals to friends. First month served 50 meals to fellow computer science students.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content">
+                        <h3>University Partnership</h3>
+                        <p>Formalized agreement with campus dining services. Hired first professional chef and expanded to serve 500 students weekly.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-content">
+                        <h3>Commercial Kitchen</h3>
+                        <p>Moved operations to a professional campus kitchen facility. Launched mobile app and expanded menu to 30+ weekly options.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h3>Expanded to 5 Campuses</h3>
+                        <p>Now serving thousands of students daily across multiple universities. Recognized by "Campus Life" magazine as top food innovation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Future</div>
+                    <div class="timeline-content">
+                        <h3>National Expansion</h3>
+                        <p>Plans to bring UniMeals to 25+ campuses by 2025 with sustainable packaging initiatives and student employment programs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Health First</h3>
+                    <p>Nutritionally balanced meals designed by experts to fuel student success and wellbeing</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Sustainability</h3>
+                    <p>Eco-friendly packaging, food waste reduction programs, and carbon-neutral delivery</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Community</h3>
+                    <p>Supporting local businesses and providing employment opportunities for students</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Innovation</h3>
+                    <p>Constantly improving our menu based on student feedback and culinary trends</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h2>See Our Kitchen in Action</h2>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/6s0a6X0QfXQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="order.html">Place Order</a></li>
+                    <li><a href="survey.html">Give Feedback</a></li>
+                    <li><a href="contacts.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 256 informatics, University of Dodoma</p>
+                <p><i class="fas fa-phone"></i> 255 762 1025 75</p>
+                <p><i class="fas fa-envelope"></i> hello@unimeals.com</p>
+                <p><i class="fas fa-clock"></i> Support: 8am-10pm daily</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Stay connected for special offers and updates!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter" style="margin-top: 1.5rem;">
+                    <input type="email" placeholder="Your email" style="padding: 0.5rem; border-radius: 5px; border: none; width: 100%; margin-bottom: 0.5rem;">
+                    <button class="btn" style="width: 100%; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 UniMeals. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Careers</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+            
+            // You would need to define dark theme styles if you want this to work fully
+            // This is just the toggle functionality
+        });
+
+        // Animation for timeline items
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        function animateTimeline() {
+            timelineItems.forEach((item, index) => {
+                const itemPosition = item.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (itemPosition < screenPosition) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        timelineItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transition = 'all 0.5s ease';
+        });
+
+        // Animate even items differently for the timeline effect
+        timelineItems.forEach((item, index) => {
+            if (index % 2 === 0) {
+                item.style.transform = 'translateX(-50px)';
+            } else {
+                item.style.transform = 'translateX(50px)';
+            }
+        });
+
+        window.addEventListener('scroll', animateTimeline);
+        window.addEventListener('load', animateTimeline);
+
+        // Animation for value cards
+        const valueCards = document.querySelectorAll('.value-card');
+        
+        function animateValues() {
+            valueCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        valueCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease ' + (Math.random() * 0.3) + 's';
+        });
+
+        window.addEventListener('scroll', animateValues);
+        window.addEventListener('load', animateValues);
+    </script>
+</body>
+</html>

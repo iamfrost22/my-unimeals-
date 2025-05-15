@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Share your feedback about UniMeals - we value your opinion to improve our campus food delivery service">
+    <meta name="keywords" content="university meals feedback, campus food survey, student dining feedback">
+    <meta name="author" content="UniMeals">
+    <title>UniMeals | Customer Feedback</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        .survey-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .survey-container h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .survey-container h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .survey-container p {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        fieldset {
+            border: none;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        legend {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Rating Scales */
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+
+        .rating-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rating-option input[type="radio"] {
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option input[type="radio"]:checked {
+            background: var(--gradient);
+            border-color: var(--primary);
+        }
+
+        .rating-option input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .rating-option label {
+            margin-top: 0.5rem;
+            font-weight: normal;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Radio Buttons */
+        .radio-options {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-options label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .radio-options input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .radio-options input[type="radio"]:checked {
+            background: var(--gradient);
+            border-color: var(--primary);
+        }
+
+        .radio-options input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .secondary-btn:hover {
+            background: #f9f9f9;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Thank You Message */
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .thank-you-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .thank-you-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .thank-you-card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .thank-you-card p {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .coupon-code {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 1.5rem auto;
+            max-width: 250px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section p i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1400px;
+            margin: 2rem auto 0;
+        }
+
+        .footer-bottom p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background: var(--gradient);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: all 0.5s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .survey-container h1 {
+                font-size: 2rem;
+            }
+            
+            legend {
+                font-size: 1.1rem;
+            }
+            
+            .rating-scale {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .rating-option {
+                flex: 1 0 40%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .survey-container {
+                padding: 2rem 1rem;
+            }
+            
+            .feedback-form {
+                padding: 1.5rem;
+            }
+            
+            fieldset {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">UniMeals</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="survey.html" class="active">Feedback</a></li>
+                <li><a href="contacts.html">Contact Us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="survey-container">
+        <h1>Share Your Feedback</h1>
+        <p>We're constantly working to improve our service. Please take a moment to tell us about your experience with UniMeals.</p>
+        
+        <form id="feedbackForm" class="feedback-form">
+            <fieldset>
+                <legend>Your Information</legend>
+                
+                <div class="form-group">
+                    <label for="feedback-name">Name (optional)</label>
+                    <input type="text" id="feedback-name" name="name" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-email">Email (optional)</label>
+                    <input type="email" id="feedback-email" name="email" placeholder="Your email address">
+                </div>
+                
+                <div class="form-group">
+                    <label for="order-reference">Order # (if applicable)</label>
+                    <input type="text" id="order-reference" name="order-reference" placeholder="e.g., #12345">
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Food Quality</legend>
+                
+                <div class="form-group">
+                    <label>How would you rate the quality of your food?*</label>
+                    <div class="rating-scale">
+                        <div class="rating-option">
+                            <input type="radio" id="food-1" name="food-quality" value="1" required>
+                            <label for="food-1">1 (Poor)</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="food-2" name="food-quality" value="2">
+                            <label for="food-2">2</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="food-3" name="food-quality" value="3">
+                            <label for="food-3">3 (Average)</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="food-4" name="food-quality" value="4">
+                            <label for="food-4">4</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="food-5" name="food-quality" value="5">
+                            <label for="food-5">5 (Excellent)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="food-comments">Comments about the food (optional)</label>
+                    <textarea id="food-comments" name="food-comments" rows="3" placeholder="What did you like or dislike about your meal? Was it fresh, tasty, and as described?"></textarea>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Delivery Experience</legend>
+                
+                <div class="form-group">
+                    <label>How satisfied were you with the delivery?*</label>
+                    <div class="rating-scale">
+                        <div class="rating-option">
+                            <input type="radio" id="delivery-1" name="delivery" value="1" required>
+                            <label for="delivery-1">1 (Very Dissatisfied)</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="delivery-2" name="delivery" value="2">
+                            <label for="delivery-2">2</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="delivery-3" name="delivery" value="3">
+                            <label for="delivery-3">3 (Neutral)</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="delivery-4" name="delivery" value="4">
+                            <label for="delivery-4">4</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="delivery-5" name="delivery" value="5">
+                            <label for="delivery-5">5 (Very Satisfied)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Was your food delivered on time?*</label>
+                    <div class="radio-options">
+                        <label>
+                            <input type="radio" name="on-time" value="yes" required>
+                            <span>Yes</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="on-time" value="no">
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="delivery-comments">Delivery comments (optional)</label>
+                    <textarea id="delivery-comments" name="delivery-comments" rows="3" placeholder="Any feedback about the delivery experience? Was the delivery person friendly and professional?"></textarea>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Overall Experience</legend>
+                
+                <div class="form-group">
+                    <label>How likely are you to recommend UniMeals to a friend?*</label>
+                    <div class="rating-scale">
+                        <div class="rating-option">
+                            <input type="radio" id="recommend-1" name="recommend" value="1" required>
+                            <label for="recommend-1">1 (Not likely)</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="recommend-2" name="recommend" value="2">
+                            <label for="recommend-2">2</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="recommend-3" name="recommend" value="3">
+                            <label for="recommend-3">3</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="recommend-4" name="recommend" value="4">
+                            <label for="recommend-4">4</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="recommend-5" name="recommend" value="5">
+                            <label for="recommend-5">5 (Very likely)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="improvements">How could we improve your experience? (optional)</label>
+                    <textarea id="improvements" name="improvements" rows="3" placeholder="Your suggestions help us improve! What could we do better?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="favorite-meal">What's your favorite meal from our menu? (optional)</label>
+                    <input type="text" id="favorite-meal" name="favorite-meal" placeholder="e.g., Harvest Grain Bowl">
+                </div>
+            </fieldset>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn submit-btn">Submit Feedback</button>
+                <button type="reset" class="btn secondary-btn">Clear Form</button>
+            </div>
+        </form>
+        
+        <div class="thank-you-message">
+            <div class="thank-you-card">
+                <i class="fas fa-heart"></i>
+                <h2>Thank You!</h2>
+                <p>We appreciate your feedback and will use it to improve our service.</p>
+                <p>As a thank you, here's a coupon code for 10% off your next order:</p>
+                <div class="coupon-code">THANKYOU10</div>
+                <a href="menu.html" class="btn">Back to Menu</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="order.html">Place Order</a></li>
+                    <li><a href="survey.html">Give Feedback</a></li>
+                    <li><a href="contacts.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Campus Drive, University Town</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@unimeals.com</p>
+                <p><i class="fas fa-clock"></i> Support: 8am-10pm daily</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Stay connected for special offers and updates!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter" style="margin-top: 1.5rem;">
+                    <input type="email" placeholder="Your email" style="padding: 0.5rem; border-radius: 5px; border: none; width: 100%; margin-bottom: 0.5rem;">
+                    <button class="btn" style="width: 100%; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 UniMeals. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Careers</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+            
+            // You would need to define dark theme styles if you want this to work fully
+            // This is just the toggle functionality
+        });
+
+        // Form submission
+        const feedbackForm = document.getElementById('feedbackForm');
+        const thankYouMessage = document.querySelector('.thank-you-message');
+
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // In a real application, you would send the form data to a server here
+            // For this demo, we'll just show the thank you message
+            
+            // Hide form and show thank you message
+            feedbackForm.style.display = 'none';
+            thankYouMessage.style.display = 'block';
+            
+            // Scroll to thank you message
+            thankYouMessage.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Form reset
+        feedbackForm.addEventListener('reset', () => {
+            // Clear any custom styling or messages
+        });
+    </script>
+</body>
+</html>
